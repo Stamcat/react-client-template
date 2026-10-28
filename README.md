@@ -29,10 +29,10 @@ npm install
 npm run dev
 ```
 
-`npm install` also sets `package.json`'s `name` to your project's folder name (via the
-`postinstall` script), so a copy of this template picks up the new app's name instead of staying
-`react-client-template`. It only runs once — it no-ops once `name` is no longer the template
-default.
+`npm install` also sets `package.json`'s (and `package-lock.json`'s) `name` to your project's
+folder name, and updates the title lines in this README, `AGENTS.md`, and
+`.github/copilot-instructions.md` to match, via the `postinstall` script. It only runs once — it
+no-ops once `name` is no longer the template default.
 
 ## Scripts
 
