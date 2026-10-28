@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+port="${PORT:-5173}"
+url="http://localhost:${port}"
+timeout="${BOOTSTRAP_TIMEOUT:-60}"
+elapsed=0
+
+until curl --silent --fail --output /dev/null "$url"; do
+  if [ "$elapsed" -ge "$timeout" ]; then
+    echo "Dev server did not respond at $url within ${timeout}s" >&2
+    exit 1
+  fi
+  sleep 1
+  elapsed=$((elapsed + 1))
+done
+
+exit 0
