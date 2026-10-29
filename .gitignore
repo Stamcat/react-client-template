@@ -5,6 +5,11 @@ node_modules/
 dist/
 coverage/
 
+# playwright
+playwright-report/
+test-results/
+blob-report/
+
 # local env
 .env
 .env.local
@@ -18,3 +23,4 @@ coverage/
 # tooling artifacts
 lintreport.json
 *.tsbuildinfo
+.codebase-memory

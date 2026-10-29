@@ -8,11 +8,17 @@ import { globalIgnores } from "eslint/config";
 import sonarjs from "eslint-plugin-sonarjs";
 import prettier from "eslint-plugin-prettier/recommended";
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import playwright from "eslint-plugin-playwright";
 
 export default tseslint.config([
-    globalIgnores(["dist", "coverage"]),
+    globalIgnores(["dist", "coverage", "playwright-report", "test-results"]),
+    {
+        files: ["e2e/**/*.{ts,tsx}"],
+        extends: [playwright.configs["flat/recommended"]],
+    },
     {
         files: ["**/*.{ts,tsx}"],
+        ignores: ["e2e/**/*"],
         extends: [
             js.configs.recommended,
             tseslint.configs.recommended,

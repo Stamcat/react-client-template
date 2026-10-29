@@ -38,6 +38,12 @@ keyboard/focus support, and sufficient color contrast. Read
 requirement for every new component and every component being refactored, applied as part of the
 same change — not a follow-up task only done when explicitly asked for an a11y review.
 
+All new code requires a meaningful Jest unit test in the same change — read
+[unit-testing](.github/skills/unit-testing/SKILL.md) for what counts as meaningful versus
+superficial, and when to reach for snapshot testing. A new route, page, or user-facing flow also
+needs a Playwright end-to-end spec covering its happy path — read
+[playwright-testing](.github/skills/playwright-testing/SKILL.md) before adding one.
+
 ## App Standards Skills
 
 Detailed, topic-specific conventions live as skills under `.github/skills/` rather than inline
@@ -54,6 +60,8 @@ touching the corresponding area of application code:
 | Semantic structure, ARIA, keyboard/focus, color contrast | [accessibility](.github/skills/accessibility/SKILL.md) |
 | Catch-block error logs, saga API-response debug logs, warn vs error levels | [logging](.github/skills/logging/SKILL.md) |
 | Skeleton loaders for deep-linkable routes' initial loading state | [loading-states](.github/skills/loading-states/SKILL.md) |
+| Meaningful Jest unit tests, required coverage for new code, snapshot-testing limits | [unit-testing](.github/skills/unit-testing/SKILL.md) |
+| Playwright e2e specs for new features/routes | [playwright-testing](.github/skills/playwright-testing/SKILL.md) |
 
 This skill set is a starting point, not a ceiling. As the app matures and new cross-cutting
 conventions emerge (a new data-fetching pattern, a testing convention, a performance budget, a
@@ -76,4 +84,6 @@ Mobile-first responsive styling, preferring routes over query strings for distin
 conventions in each skill's own "not machine-enforced" notes are expectations to follow but aren't
 machine-enforced — check for them in review.
 
-Run `npm run lint` (ESLint + dependency-cruiser + package lint) before finishing any change.
+Run `npm run lint` (ESLint + dependency-cruiser + package lint) and `npm run test` before
+finishing any change. Run `npm run test:e2e` as well when the change adds or touches a route,
+page, or user-facing flow.

@@ -14,7 +14,10 @@ day one, structured so both can mature as the app is built out.
 - **Code quality**: ESLint (`typescript-eslint`, `eslint-plugin-react`, `eslint-plugin-react-hooks`,
   `eslint-plugin-sonarjs`, Prettier integration), Prettier, dependency-cruiser (import-boundary
   rules), `npm-package-json-lint`, commitlint, EditorConfig.
-- **Testing**: Jest + `ts-jest` + `jsdom`.
+- **Testing**: Jest + `ts-jest` + `jsdom` for unit tests (see
+  [unit-testing](.github/skills/unit-testing/SKILL.md)), Playwright for end-to-end tests (see
+  [playwright-testing](.github/skills/playwright-testing/SKILL.md)). Run `npx playwright install`
+  once before the first `npm run test:e2e`.
 - **AI instructions**: [`AGENTS.md`](AGENTS.md) is the single source of truth for app standards,
   read by GitHub Copilot, Claude, and Cursor via pointer files
   (`.github/copilot-instructions.md`, `CLAUDE.md`, `.cursor/rules/app-standards.mdc`). Detailed,
@@ -31,8 +34,12 @@ npm run dev
 
 `npm install` also sets `package.json`'s (and `package-lock.json`'s) `name` to your project's
 folder name, and updates the title lines in this README, `AGENTS.md`, and
-`.github/copilot-instructions.md` to match, via the `postinstall` script. It only runs once — it
-no-ops once `name` is no longer the template default.
+`.github/copilot-instructions.md` to match, via the `postinstall` script. It also prompts for a
+styling approach (SCSS Modules, styled-components, or Tailwind CSS), an optional design system
+(`@stamcat/craftsman`, `@stamcat/chadman`, or none), and a state-management approach (Redux
+Toolkit + redux-saga, Redux Toolkit + thunk, or none), then scaffolds only the chosen ones. This
+all runs once — the `scripts/postinstall/` scripts delete themselves afterward, so later
+`npm install` runs are a no-op.
 
 ## Scripts
 
@@ -45,6 +52,8 @@ no-ops once `name` is no longer the template default.
 | `npm run type-check` | `tsc --noEmit` |
 | `npm run test` | Run Jest |
 | `npm run test:coverage` | Run Jest with coverage |
+| `npm run test:e2e` | Run Playwright end-to-end specs |
+| `npm run test:e2e:ui` | Run Playwright specs in interactive UI mode |
 | `npm run pretty` | Format `src/**/*` with Prettier |
 
 ## Growing this template

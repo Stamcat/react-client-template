@@ -13,12 +13,14 @@
     "lint:fix": "eslint . --fix",
     "lint:package": "npmPkgJsonLint ./package.json",
     "lint:sonar": "eslint . -f json -o lintreport.json",
-    "postinstall": "node scripts/set-package-name.cjs",
+    "postinstall": "node scripts/postinstall/index.cjs",
     "pretty": "prettier --write \"src/**/*\"",
     "preview": "vite preview",
     "test": "jest --passWithNoTests",
     "test:bail": "jest --bail",
     "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.1",
     "@eslint/js": "9.33.0",
+    "@playwright/test": "1.64.1",
     "@types/jest": "30.0.0",
     "@types/node": "26.6.3",
     "@types/react": "19.1.10",
@@ -41,6 +44,7 @@
     "dependency-cruiser": "17.4.3",
     "eslint": "9.33.0",
     "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-playwright": "2.12.1",
     "eslint-plugin-prettier": "5.5.5",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
