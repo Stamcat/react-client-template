@@ -1,7 +1,7 @@
 // Single postinstall entry point: renames the package, then runs one-time setup prompts.
 const fs = require("node:fs");
 const path = require("node:path");
-const { root, readPkg, writePkg, closePrompt } = require("./utils.cjs");
+const { root, readPkg, writePkg, getRepoSlug, closePrompt } = require("./utils.cjs");
 const { setPackageName } = require("./package-name.cjs");
 const { setupArchitecture } = require("./architecture.cjs");
 const { setupStyling } = require("./styling.cjs");
@@ -9,6 +9,11 @@ const { setupDesignSystem } = require("./design-system.cjs");
 const { setupStateManagement } = require("./state-management.cjs");
 
 async function main() {
+    // The template's own repo installs itself for development — the one-time scaffolding prompts don't apply.
+    if (getRepoSlug() === "Stamcat/react-client-template") {
+        return;
+    }
+
     const pkg = readPkg();
     // The rename only happens once, so it also marks whether the one-time prompts below should run.
     const isFirstRun = pkg.name === "react-client-template";

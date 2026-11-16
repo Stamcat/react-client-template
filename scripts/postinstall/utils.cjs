@@ -27,6 +27,17 @@ function removeDependency(pkg, name) {
     delete pkg.devDependencies?.[name];
 }
 
+// Returns "owner/repo" from the origin remote, or null when it can't be determined.
+function getRepoSlug() {
+    try {
+        const url = execFileSync("git", ["remote", "get-url", "origin"], { encoding: "utf8", shell: isWindows }).trim();
+        const match = url.match(/[/:]([^/:]+\/[^/]+?)(\.git)?$/);
+        return match ? match[1] : null;
+    } catch {
+        return null;
+    }
+}
+
 // Falls back to a known-good pin when offline or the registry can't be reached.
 function getLatestVersion(name, fallback) {
     try {
@@ -60,6 +71,7 @@ module.exports = {
     writePkg,
     addDependency,
     removeDependency,
+    getRepoSlug,
     getLatestVersion,
     promptChoice,
     closePrompt,
