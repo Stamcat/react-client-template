@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { root, readPkg, writePkg, closePrompt } = require("./utils.cjs");
 const { setPackageName } = require("./package-name.cjs");
+const { setupArchitecture } = require("./architecture.cjs");
 const { setupStyling } = require("./styling.cjs");
 const { setupDesignSystem } = require("./design-system.cjs");
 const { setupStateManagement } = require("./state-management.cjs");
@@ -15,9 +16,10 @@ async function main() {
     setPackageName(pkg);
 
     if (isFirstRun) {
-        await setupStyling(pkg);
+        const architecture = await setupArchitecture(pkg);
+        await setupStyling(pkg, architecture);
         await setupDesignSystem(pkg);
-        await setupStateManagement(pkg);
+        await setupStateManagement(pkg, architecture);
         // The one-time scripts remove themselves below; this permanent one takes over postinstall.
         pkg.scripts = pkg.scripts ?? {};
         pkg.scripts.postinstall = "node scripts/codebase-memory-check.cjs";

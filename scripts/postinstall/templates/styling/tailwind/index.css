@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Class extraction pattern: utility combinations are named and reused via @apply instead of inlined in markup. */
+@layer components {
+    .app-layout {
+        @apply p-4;
+    }
+
+    .app-heading {
+        @apply text-2xl font-bold;
+    }
+}

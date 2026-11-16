@@ -7,6 +7,17 @@ const REDUX_INDEX_PATH = path.join(root, "src", "redux", "index.ts");
 const STORE_PATH = path.join(root, "src", "utils", "store.ts");
 const MAIN_TSX_PATH = path.join(root, "src", "main.tsx");
 
+// Next.js root files (_app.tsx, providers.tsx) replace main.tsx as the Provider wrapper's home.
+function getRootFilePath(architecture) {
+    if (architecture === "nextjs") {
+        return path.join(root, "src", "pages", "_app.tsx");
+    }
+    if (architecture === "rsc") {
+        return path.join(root, "src", "app", "providers.tsx");
+    }
+    return MAIN_TSX_PATH;
+}
+
 function setupThunk(pkg) {
     removeDependency(pkg, "redux-saga");
     fs.writeFileSync(
@@ -37,12 +48,38 @@ function setupThunk(pkg) {
     );
 }
 
-function setupNone(pkg) {
+function setupNone(pkg, architecture) {
     removeDependency(pkg, "redux-saga");
     removeDependency(pkg, "@reduxjs/toolkit");
     removeDependency(pkg, "react-redux");
     fs.rmSync(path.join(root, "src", "redux"), { recursive: true, force: true });
     fs.rmSync(STORE_PATH, { force: true });
+
+    if (architecture === "nextjs") {
+        fs.writeFileSync(
+            getRootFilePath(architecture),
+            [
+                'import type { AppProps } from "next/app";',
+                "",
+                "export default function App({ Component, pageProps }: AppProps) {",
+                "    return <Component {...pageProps} />;",
+                "}",
+                "",
+            ].join("\n"),
+        );
+        return;
+    }
+
+    if (architecture === "rsc") {
+        fs.rmSync(getRootFilePath(architecture), { force: true });
+        const layoutPath = path.join(root, "src", "app", "layout.tsx");
+        const layout = fs
+            .readFileSync(layoutPath, "utf8")
+            .replace('import { Providers } from "./providers";\n', "")
+            .replace("<Providers>{children}</Providers>", "{children}");
+        fs.writeFileSync(layoutPath, layout);
+        return;
+    }
 
     const mainTsx = fs
         .readFileSync(MAIN_TSX_PATH, "utf8")
@@ -56,7 +93,7 @@ function setupNone(pkg) {
     fs.writeFileSync(MAIN_TSX_PATH, mainTsx);
 }
 
-async function setupStateManagement(pkg) {
+async function setupStateManagement(pkg, architecture) {
     const question = [
         "",
         "Which state management approach should this project use?",
@@ -70,7 +107,7 @@ async function setupStateManagement(pkg) {
     if (choice === "2") {
         setupThunk(pkg);
     } else if (choice === "3") {
-        setupNone(pkg);
+        setupNone(pkg, architecture);
     }
 }
 

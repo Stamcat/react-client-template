@@ -1,36 +1,48 @@
 ---
 name: styling
-description: 'Styling, responsive design, and shared UI component conventions for the app standards (SCSS Modules by default, CSS-in-JS/Tailwind opt-in only, mobile-first breakpoints). Use when writing or reviewing styles, layout, or markup anywhere in the repo.'
+description: 'Styling, responsive design, and shared UI component conventions for the app standards (no styling approach by default — choose SCSS Modules, CSS Modules, Tailwind CSS, or Emotion (@emotion/styled + @emotion/react); styled-components discouraged; mobile-first breakpoints). Use when writing or reviewing styles, layout, or markup anywhere in the repo.'
 ---
 
 # App Standards Styling
 
 Applies to application code across the repo.
 
-## SCSS by default
+## No styling approach by default
 
-- SCSS Modules are the default for application styling.
-- Neither CSS-in-JS (`styled-components`, `@emotion/react`/`@emotion/styled`) nor Tailwind-like
-  utility-class patterns (including `clsx`/`tailwind-merge`) are used out of the box, and neither
-  is encouraged — don't introduce either unprompted. Both remain available if a developer
-  explicitly decides to use that pattern for a given area; don't mix one into a component that's
-  already using SCSS Modules.
-- Once a developer has explicitly opted into CSS-in-JS or Tailwind for an area, keep following
-  that choice for new work in that area — don't revert it back to SCSS Modules unprompted just
-  because SCSS is the default.
+- The template ships with no styling approach wired in — new projects start with plain markup and
+  no stylesheet. The postinstall prompt (`scripts/postinstall/styling.cjs`) has a developer choose
+  one of: none (bring your own), SCSS Modules, CSS Modules, Tailwind CSS, or Emotion
+  (`@emotion/styled` paired with `@emotion/react`, scaffolded together as a single option).
+- `styled-components` is no longer supported and is discouraged — use Emotion instead for any
+  CSS-in-JS need. Don't introduce `styled-components` unprompted, and prefer migrating existing
+  `styled-components` usage to Emotion when touching that code.
+- Once a developer has picked an approach (SCSS Modules, CSS Modules, Tailwind, or Emotion) for an
+  area, keep following that choice for new work there — don't revert it to a different approach
+  unprompted.
 - Prefer semantic HTML5 elements (`section`, `article`, `nav`, `header`, `footer`, `aside`, etc.)
   over generic `div`/`span` where one fits the content's role.
-- Use CSS Modules (`*.module.scss`) and nest each component's rules under a single root class so
-  styles stay scoped to that component and can't leak into or be overridden by unrelated markup.
-- SCSS class names are kebab-case (e.g. `.contact-card`, `.showcase-header`), never camelCase or
-  snake_case.
+- When SCSS Modules or CSS Modules is the chosen approach, nest each component's rules under a
+  single root class (SCSS) or scope them per component file (CSS Modules) so styles can't leak
+  into or be overridden by unrelated markup.
+- SCSS/CSS class names are kebab-case (e.g. `.contact-card`, `.showcase-header`), never camelCase
+  or snake_case.
+
+## When Tailwind CSS is the chosen approach
+
+- Use the class extraction pattern: define reusable class names in a stylesheet under
+  `@layer components` with `@apply` (see `scripts/postinstall/templates/styling/tailwind/index.css`
+  for the scaffolded example), and reference those named classes from markup instead of inlining
+  long, repeated utility-class strings directly in JSX.
+- Reach for inline utility classes only for one-off, non-repeated styling; extract to a named
+  `@apply` class as soon as the same combination of utilities is needed in more than one place.
 
 ## When a plain (non-module) stylesheet is appropriate
 
-- Default to CSS Modules (`*.module.scss`). Reach for a plain `.scss` file instead only when most
-  of a component's rules need to target a third-party component's rendered class names that have
-  no prop-based override — in a CSS Module those selectors would need `:global(...)` on every
-  rule, which adds noise without adding scoping value since they're already global names.
+- Default to CSS Modules (`*.module.scss` under the SCSS Modules approach, or `*.module.css` under
+  the CSS Modules approach). Reach for a plain, non-module stylesheet instead only when most of a
+  component's rules need to target a third-party component's rendered class names that have no
+  prop-based override — in a CSS Module those selectors would need `:global(...)` on every rule,
+  which adds noise without adding scoping value since they're already global names.
 - Still nest every rule under a single root class (e.g. `.add-note-modal { ... }`) so the
   stylesheet's own classes don't leak — only the specific third-party classes being targeted are
   intentionally left unscoped.
@@ -81,6 +93,7 @@ Applies to application code across the repo.
 
 ## Enforcement
 
-SCSS Modules as the default, and treating CSS-in-JS/Tailwind-like patterns as opt-in rather than
-banned, aren't machine-enforced — check for them in review, same as mobile-first responsive
-styling and preferring shared breakpoint helpers.
+None-by-default styling, offering SCSS Modules/CSS Modules/Tailwind/Emotion as the scaffolded
+choices, and discouraging `styled-components` in favor of Emotion, aren't machine-enforced — check
+for them in review, same as mobile-first responsive styling, the Tailwind class extraction
+pattern, and preferring shared breakpoint helpers.

@@ -34,11 +34,14 @@ npm run dev
 
 `npm install` also sets `package.json`'s (and `package-lock.json`'s) `name` to your project's
 folder name, and updates the title lines in this README, `AGENTS.md`, and
-`.github/copilot-instructions.md` to match, via the `postinstall` script. It also prompts for a
-styling approach (SCSS Modules, styled-components, or Tailwind CSS), an optional design system
-(`@stamcat/craftsman`, `@stamcat/chadman`, or none), and a state-management approach (Redux
-Toolkit + redux-saga, Redux Toolkit + thunk, or none), then scaffolds only the chosen ones. This
-all runs once — the `scripts/postinstall/` scripts delete themselves afterward, so later
+`.github/copilot-instructions.md` to match, via the `postinstall` script. It also prompts for an
+application architecture (React Vite SPA, Next.js Pages Router, or React Server Components via
+Next.js App Router) — choosing the React Vite SPA then asks whether to add `vite-plugin-prerender`,
+which prerenders static HTML per route at build time so crawlers that don't execute JS still see
+real content — a styling approach (SCSS Modules, styled-components, or Tailwind CSS), an optional
+design system (`@stamcat/craftsman`, `@stamcat/chadman`, or none), and a state-management approach
+(Redux Toolkit + redux-saga, Redux Toolkit + thunk, or none), then scaffolds only the chosen ones.
+This all runs once — the `scripts/postinstall/` scripts delete themselves afterward, so later
 `npm install` runs are a no-op.
 
 ## Scripts
