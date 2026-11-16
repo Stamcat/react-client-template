@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-    title: "React Client Template",
+    title: "React Server Components Application",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

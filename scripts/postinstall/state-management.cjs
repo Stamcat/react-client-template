@@ -97,7 +97,7 @@ async function setupStateManagement(pkg, architecture) {
     const question = [
         "",
         "Which state management approach should this project use?",
-        "  1) Redux Toolkit + redux-saga (recommended, default)",
+        "  1) Redux Toolkit + redux-saga",
         "  2) Redux Toolkit + thunk",
         "  3) None — bring your own",
         "Enter a number [1]: ",

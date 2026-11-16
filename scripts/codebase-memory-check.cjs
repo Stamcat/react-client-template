@@ -1,4 +1,5 @@
 // Permanent postinstall hook: offers to install codebase-memory-mcp and index this repo for it.
+const fs = require("node:fs");
 const { spawnSync } = require("node:child_process");
 const readline = require("node:readline");
 const path = require("node:path");
@@ -10,6 +11,12 @@ const isWindows = process.platform === "win32";
 function isInstalled() {
     const result = spawnSync(BIN, ["--version"], { stdio: "ignore", shell: isWindows });
     return !result.error;
+}
+
+// index_repository writes its output here; its presence means this repo is already indexed.
+function isIndexed() {
+    const indexPath = path.join(root, ".codebase-memory");
+    return fs.existsSync(indexPath) && fs.readdirSync(indexPath).length > 0;
 }
 
 function ask(question) {
@@ -46,6 +53,10 @@ function indexRepo() {
 }
 
 async function run() {
+    if (isIndexed()) {
+        return;
+    }
+
     if (isInstalled()) {
         const shouldIndex = await ask(
             "\nIndex this repository with codebase-memory-mcp now for richer AI agent context? [y/N] ",

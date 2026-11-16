@@ -77,29 +77,26 @@ function setupTailwind(pkg, architecture) {
 }
 
 async function setupStyling(pkg, architecture) {
+    // CSS-in-JS doesn't play well with Next.js/RSC server rendering, so Emotion is omitted there.
+    const supportsEmotion = architecture !== "nextjs" && architecture !== "rsc";
+    const options = [
+        { label: "None — create your own", setup: () => setupNone() },
+        { label: "SCSS Modules", setup: () => setupSass(pkg) },
+        { label: "CSS Modules", setup: () => setupCssModules() },
+        { label: "Tailwind CSS", setup: () => setupTailwind(pkg, architecture) },
+        ...(supportsEmotion ? [{ label: "Emotion (@emotion/styled + @emotion/react)", setup: () => setupEmotion(pkg) }] : []),
+    ];
+
     const question = [
         "",
         "Which styling approach should this project use?",
-        "  1) None — create your own (recommended, default)",
-        "  2) SCSS Modules",
-        "  3) CSS Modules",
-        "  4) Tailwind CSS",
-        "  5) Emotion (@emotion/styled + @emotion/react)",
+        ...options.map(({ label }, index) => `  ${index + 1}) ${label}`),
         "Enter a number [1]: ",
     ].join("\n");
     const choice = await promptChoice(question, { defaultValue: "1" });
 
-    if (choice === "2") {
-        setupSass(pkg);
-    } else if (choice === "3") {
-        setupCssModules();
-    } else if (choice === "4") {
-        setupTailwind(pkg, architecture);
-    } else if (choice === "5") {
-        setupEmotion(pkg);
-    } else {
-        setupNone();
-    }
+    const selected = options[Number(choice) - 1];
+    (selected ?? options[0]).setup();
 }
 
 module.exports = { setupStyling };

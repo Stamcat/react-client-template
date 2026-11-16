@@ -5,7 +5,7 @@ module.exports = {
     moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/src/$1",
     },
-    testMatch: ["<rootDir>/src/**/__tests__/**/*.(ts|tsx|js)", "<rootDir>/src/**/*.(test|spec).(ts|tsx|js)"],
+    testMatch: ["<rootDir>/src/**/__tests__/**/*.(ts|tsx|js)"],
     collectCoverageFrom: ["src/**/*.(ts|tsx)", "!src/**/*.d.ts", "!src/**/__tests__/**/*", "!src/**/index.ts"],
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
     transform: {

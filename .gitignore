@@ -24,3 +24,4 @@ blob-report/
 lintreport.json
 *.tsbuildinfo
 .codebase-memory
+.next

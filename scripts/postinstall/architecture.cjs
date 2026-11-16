@@ -108,7 +108,7 @@ async function setupArchitecture(pkg) {
     const question = [
         "",
         "Which application architecture should this project use?",
-        "  1) React (Vite SPA) (recommended, default)",
+        "  1) React (Vite SPA)",
         "  2) Next.js (Pages Router)",
         "  3) React Server Components (Next.js App Router)",
         "Enter a number [1]: ",

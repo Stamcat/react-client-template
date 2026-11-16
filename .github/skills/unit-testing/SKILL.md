@@ -5,8 +5,16 @@ description: 'Jest unit-testing conventions for the app standards — what makes
 
 # App Standards Unit Testing
 
-Applies to `src/**/__tests__/**` and `*.test.ts(x)` files across the repo, run via `npm run test`
-(Jest + `ts-jest` + `jsdom`, configured in `jest.config.cjs`).
+Applies to `src/**/__tests__/**` files across the repo, run via `npm run test` (Jest + `ts-jest` +
+`jsdom`, configured in `jest.config.cjs`).
+
+## Test file location
+
+- Put every test in a `__tests__` folder alongside the module it covers (e.g.
+  `src/components/Widget/__tests__/Widget.test.tsx` for `src/components/Widget/Widget.tsx`) —
+  never a `*.test.ts(x)` file dropped in the same folder as the file it tests.
+- Name the file after the module under test (`Widget.test.tsx`, `formatDate.test.ts`) so the
+  pairing is obvious without opening it.
 
 ## All new code needs a meaningful test
 
