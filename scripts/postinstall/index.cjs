@@ -20,9 +20,8 @@ async function main() {
         await setupStyling(pkg, architecture);
         await setupDesignSystem(pkg);
         await setupStateManagement(pkg, architecture);
-        // The one-time scripts remove themselves below; this permanent one takes over postinstall.
-        pkg.scripts = pkg.scripts ?? {};
-        pkg.scripts.postinstall = "node scripts/codebase-memory-check.cjs";
+        // The one-time scripts remove themselves below, leaving no permanent postinstall script.
+        delete pkg.scripts.postinstall;
     }
 
     writePkg(pkg);
@@ -32,7 +31,6 @@ async function main() {
         console.log("\nDependencies added to package.json — run `npm install` to finish setup.\n");
         // Scaffolding choices are now baked into the project; the one-time scripts have nothing left to do.
         fs.rmSync(path.join(root, "scripts", "postinstall"), { recursive: true, force: true });
-        await require("../codebase-memory-check.cjs").run();
     }
 }
 
