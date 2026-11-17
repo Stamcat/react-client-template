@@ -1,9 +1,10 @@
 # Agent Instructions — react-client-template
 
 This file is the canonical source of AI coding instructions for this repository. `CLAUDE.md`,
-`.github/copilot-instructions.md`, and `.cursor/rules/app-standards.mdc` all point back to this
-file instead of duplicating its content, so Claude, GitHub Copilot, and Cursor all pick up the
-same rules.
+`.github/copilot-instructions.md`, `GEMINI.md`, and `.cursor/rules/app-standards.mdc` all point
+back to this file instead of duplicating its content, so Claude, GitHub Copilot, Gemini, and
+Cursor all pick up the same rules. Grok (via `grok-cli`) and GPT (via OpenAI Codex) read
+`AGENTS.md` directly and need no pointer file.
 
 ## App Standards
 
