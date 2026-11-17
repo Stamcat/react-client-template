@@ -29,20 +29,25 @@ day one, structured so both can mature as the app is built out.
 
 ```sh
 npm install
+npm install
 npm run dev
 ```
 
-`npm install` also sets `package.json`'s (and `package-lock.json`'s) `name` to your project's
-folder name, and updates the title lines in this README, `AGENTS.md`, and
-`.github/copilot-instructions.md` to match, via the `postinstall` script. It also prompts for an
-application architecture (React Vite SPA, Next.js Pages Router, or React Server Components via
-Next.js App Router) — choosing the React Vite SPA then asks whether to add `vite-plugin-prerender`,
-which prerenders static HTML per route at build time so crawlers that don't execute JS still see
-real content — a styling approach (SCSS Modules, styled-components, or Tailwind CSS), an optional
-design system (`@stamcat/craftsman`, `@stamcat/chadman`, or none), and a state-management approach
-(Redux Toolkit + redux-saga, Redux Toolkit + thunk, or none), then scaffolds only the chosen ones.
-This all runs once — the `scripts/postinstall/` scripts delete themselves afterward, so later
-`npm install` runs are a no-op.
+The first `npm install` runs this template's one-time `postinstall` script, which sets
+`package.json`'s (and `package-lock.json`'s) `name` to your project's folder name, updates the
+title lines in this README, `AGENTS.md`, and `.github/copilot-instructions.md` to match, then
+prompts for an application architecture (React Vite SPA, Next.js Pages Router, or React Server
+Components via Next.js App Router) — choosing the React Vite SPA then asks whether to add
+`vite-plugin-prerender`, which prerenders static HTML per route at build time so crawlers that
+don't execute JS still see real content — a styling approach (SCSS Modules, styled-components, or
+Tailwind CSS), an optional design system (`@stamcat/craftsman`, `@stamcat/chadman`, or none), and a
+state-management approach (Redux Toolkit + redux-saga, Redux Toolkit + thunk, or none). Each choice
+adds or removes dependencies in `package.json` and scaffolds only the chosen files, but doesn't
+install anything — **the second `npm install` is required** to actually install the
+newly-added/removed dependencies before `npm run dev` will work.
+
+This setup only runs once — the `scripts/postinstall/` scripts delete themselves after the first
+run, so every `npm install` after that is a normal install with no prompts.
 
 ## Scripts
 
