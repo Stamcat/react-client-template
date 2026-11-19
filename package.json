@@ -1,7 +1,7 @@
 {
   "name": "react-client-template",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1-beta.0",
   "type": "module",
   "bin": {
     "create-react-client-app": "packages/create-app/bin/create.js"
