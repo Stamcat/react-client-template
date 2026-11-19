@@ -48,21 +48,27 @@ new project with the CLI.
 
 ## Getting started
 
-To generate a new project with the CLI (choosing architecture, styling, design system, and
-state-management interactively), clone this repo and run the generator directly — it has no
-dependencies of its own, so no `npm install` is needed at this repo's root first:
+To generate a new project without cloning this repo — the same `npx`-driven experience as
+`create-react-app`, choosing architecture, styling, design system, and state management
+interactively — run the CLI straight from this repo's GitHub source. `npx` fetches it behind the
+scenes into its own cache, then scaffolds a new folder in your current directory, so the result
+never ends up nested inside a local clone:
 
 ```sh
-git clone https://github.com/Stamcat/react-client-template.git
-cd react-client-template
-node packages/create-app/bin/create.js my-new-app
-cd my-new-app && npm install && npm run dev
+npx github:Stamcat/react-client-template my-new-app
+cd my-new-app && npm run dev
 ```
+
+`npm install` runs automatically as part of generation (pass `--skip-install` to skip it). The
+first run is slower since `npx` installs this whole repo's dependencies into its cache before
+invoking the generator; later runs reuse that cache.
 
 To run this repo's own checkout directly (the default Vite/no-styling/redux-saga combination,
 used for developing and validating the template system itself):
 
 ```sh
+git clone https://github.com/Stamcat/react-client-template.git
+cd react-client-template
 npm install
 npm run dev
 ```

@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "bin": {
+    "create-react-client-app": "packages/create-app/bin/create.js"
+  },
   "scripts": {
     "build": "tsc -b && vite build",
     "dev": "vite",
