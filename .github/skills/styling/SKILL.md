@@ -10,7 +10,7 @@ Applies to application code across the repo.
 ## No styling approach by default
 
 - The template ships with no styling approach wired in — new projects start with plain markup and
-  no stylesheet. The `create-react-client-app` CLI's styling prompt (`templates/styling/`) has a
+  no stylesheet. The `create-react-client-app` CLI's styling prompt (`packages/create-app/templates/styling/`) has a
   developer choose one of: none (bring your own), SCSS Modules, CSS Modules, Tailwind CSS, or
   Emotion (`@emotion/styled` paired with `@emotion/react`, scaffolded together as a single option).
 - `styled-components` is no longer supported and is discouraged — use Emotion instead for any
@@ -30,7 +30,7 @@ Applies to application code across the repo.
 ## When Tailwind CSS is the chosen approach
 
 - Use the class extraction pattern: define reusable class names in a stylesheet under
-  `@layer components` with `@apply` (see `templates/styling/tailwind/vite/src/index.css` for the
+  `@layer components` with `@apply` (see `packages/create-app/templates/styling/tailwind/vite/src/index.css` for the
   scaffolded example), and reference those named classes from markup instead of inlining long,
   repeated utility-class strings directly in JSX.
 - Reach for inline utility classes only for one-off, non-repeated styling; extract to a named

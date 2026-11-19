@@ -1,7 +1,7 @@
 # react-client-template
 
-Source repo for the `create-react-client-app` CLI (`packages/create-app/`) and its layered
-templates (`templates/`): a project generator that lets you pick the application architecture,
+Source repo for the `create-react-client-app` CLI and its layered templates, both living under
+`packages/create-app/`: a project generator that lets you pick the application architecture,
 styling approach, design system, and state-management approach for a new React client project,
 then scaffolds only what you chose — so the result is never a one-size-fits-all template, and
 both the generated code and its AI instructions can mature as the app is built out.
@@ -48,20 +48,28 @@ new project with the CLI.
 
 ## Getting started
 
-To generate a new project without cloning this repo — the same `npx`-driven experience as
-`create-react-app`, choosing architecture, styling, design system, and state management
-interactively — run the CLI straight from this repo's GitHub source. `npx` fetches it behind the
-scenes into its own cache, then scaffolds a new folder in your current directory, so the result
-never ends up nested inside a local clone:
+To generate a new project (choosing architecture, styling, design system, and state management
+interactively), run the published CLI with `npx` — no clone needed, it scaffolds into your current
+directory:
 
 ```sh
-npx exec --allow-git -- github:Stamcat/react-client-template my-react-app
+npx @stamcat/create-react-client-app my-new-app
 cd my-new-app && npm run dev
 ```
 
-`npm install` runs automatically as part of generation (pass `--skip-install` to skip it). The
-first run is slower since `npx` installs this whole repo's dependencies into its cache before
-invoking the generator; later runs reuse that cache.
+`npm install` runs automatically as part of generation (pass `--skip-install` to skip it).
+
+If you'd rather not fetch from the npm registry (or are working on the generator itself), clone
+this repo and run it by path instead, without `cd`-ing into the clone — the generated project
+lands next to it, as a sibling folder, instead of nested inside it:
+
+```sh
+git clone https://github.com/Stamcat/react-client-template.git
+node react-client-template/packages/create-app/bin/create.js my-new-app
+cd my-new-app && npm run dev
+```
+
+Delete the `react-client-template` clone afterward if you only needed it to generate one project.
 
 To run this repo's own checkout directly (the default Vite/no-styling/redux-saga combination,
 used for developing and validating the template system itself):

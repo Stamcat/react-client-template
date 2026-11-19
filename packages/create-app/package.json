@@ -1,10 +1,19 @@
 {
   "name": "@stamcat/create-react-client-app",
-  "private": true,
   "version": "0.0.1",
   "type": "module",
+  "description": "Project generator for react-client-template: pick architecture, styling, design system, and state management, then scaffold only what you chose.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stamcat/react-client-template.git",
+    "directory": "packages/create-app"
+  },
+  "license": "MIT",
   "bin": {
     "create-react-client-app": "./bin/create.js"
   },
-  "files": ["bin", "src"]
+  "files": ["bin", "src", "templates"],
+  "publishConfig": {
+    "access": "public"
+  }
 }

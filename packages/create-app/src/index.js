@@ -14,7 +14,7 @@ import {
 } from "./options.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const TEMPLATES_ROOT = path.join(__dirname, "..", "..", "..", "templates");
+const TEMPLATES_ROOT = path.join(__dirname, "..", "templates");
 
 function sanitizePackageName(name) {
     return name
