@@ -55,7 +55,7 @@ scenes into its own cache, then scaffolds a new folder in your current directory
 never ends up nested inside a local clone:
 
 ```sh
-npx github:Stamcat/react-client-template my-new-app
+npx exec --allow-git -- github:Stamcat/react-client-template test-react-app
 cd my-new-app && npm run dev
 ```
 
