@@ -1,8 +1,15 @@
 {
-  "name": "react-client-template",
-  "private": true,
+  "name": "@stamcat/react-client-template",
   "version": "0.0.1",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stamcat/react-client-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Stamcat/craftsman/issues"
+  },
+  "homepage": "https://github.com/Stamcat/craftsman#readme",
   "bin": {
     "create-react-client-app": "packages/create-app/bin/create.js"
   },
