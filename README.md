@@ -1,24 +1,30 @@
 # react-client-template
 
-A base project template for React client applications, pre-wired with the code-quality tooling
-and AI coding-agent instructions a project needs from day one. A one-time `postinstall` setup
-(see "Getting started" below) lets you pick the application architecture, styling approach,
-design system, and state-management approach for your project, then scaffolds only what you
-chose — so the result is never a one-size-fits-all template, and both the code and the AI
-instructions can mature as the app is built out.
+Source repo for the `create-react-client-app` CLI (`packages/create-app/`) and its layered
+templates (`templates/`): a project generator that lets you pick the application architecture,
+styling approach, design system, and state-management approach for a new React client project,
+then scaffolds only what you chose — so the result is never a one-size-fits-all template, and
+both the generated code and its AI instructions can mature as the app is built out.
+
+The repo root itself is also a working checkout of the default combination (Vite SPA, no styling,
+Redux Toolkit + redux-saga, no design system) — pre-wired with the same code-quality tooling and
+AI coding-agent instructions described below — used to develop and validate the template system
+against a real app. See "Getting started" for running this checkout directly versus generating a
+new project with the CLI.
 
 ## What's included
 
-- **Architecture** (chosen at setup): React (Vite SPA) with `react-router-dom` routing (see
+- **Architecture** (chosen when generating a project): React (Vite SPA) with `react-router-dom` routing (see
   [routing](.github/skills/routing/SKILL.md)) and an optional `vite-plugin-prerender` build step
   for crawler-visible static HTML; Next.js (Pages Router); or React Server Components (Next.js App
   Router). Each scaffolds only the files and dependencies that architecture needs.
-- **Styling** (chosen at setup): SCSS Modules, CSS Modules, Tailwind CSS, Emotion (Vite SPA and
-  Pages Router only — CSS-in-JS doesn't play well with RSC server rendering), or none. See
+- **Styling** (chosen when generating a project): SCSS Modules, CSS Modules, Tailwind CSS, Emotion
+  (Vite SPA and Pages Router only), or none. See
   [styling](.github/skills/styling/SKILL.md).
-- **Design system** (optional, chosen at setup): `@stamcat/craftsman`, `@stamcat/chadman`, or none.
-- **State management** (chosen at setup): Redux Toolkit + redux-saga, Redux Toolkit + thunk, or
-  none, wired through `src/redux/index.ts` when selected. See
+- **Design system** (optional, chosen when generating a project): `@stamcat/craftsman`,
+  `@stamcat/chadman`, or none.
+- **State management** (chosen when generating a project): Redux Toolkit + redux-saga, Redux
+  Toolkit + thunk, or none, wired through `src/utils/store.ts` when selected. See
   [state-management](.github/skills/state-management/SKILL.md).
 - **Build/dev tooling**: TypeScript (project references); Vite + `@vitejs/plugin-react-swc` for the
   SPA architecture, or Next.js for the other two.
@@ -42,28 +48,24 @@ instructions can mature as the app is built out.
 
 ## Getting started
 
+To generate a new project with the CLI (choosing architecture, styling, design system, and
+state-management interactively), clone this repo and run the generator directly — it has no
+dependencies of its own, so no `npm install` is needed at this repo's root first:
+
 ```sh
-npm install
+git clone https://github.com/Stamcat/react-client-template.git
+cd react-client-template
+node packages/create-app/bin/create.js my-new-app
+cd my-new-app && npm install && npm run dev
+```
+
+To run this repo's own checkout directly (the default Vite/no-styling/redux-saga combination,
+used for developing and validating the template system itself):
+
+```sh
 npm install
 npm run dev
 ```
-
-The first `npm install` runs this template's one-time `postinstall` script, which sets
-`package.json`'s (and `package-lock.json`'s) `name` to your project's folder name, updates the
-title lines in this README, `AGENTS.md`, and `.github/copilot-instructions.md` to match, then
-prompts for an application architecture (React Vite SPA, Next.js Pages Router, or React Server
-Components via Next.js App Router) — choosing the React Vite SPA then asks whether to add
-`vite-plugin-prerender`, which prerenders static HTML per route at build time so crawlers that
-don't execute JS still see real content — a styling approach (SCSS Modules, CSS Modules, Tailwind
-CSS, Emotion, or none), an optional design system (`@stamcat/craftsman`, `@stamcat/chadman`, or
-none), and a state-management approach (Redux Toolkit + redux-saga, Redux Toolkit + thunk, or
-none). Each choice
-adds or removes dependencies in `package.json` and scaffolds only the chosen files, but doesn't
-install anything — **the second `npm install` is required** to actually install the
-newly-added/removed dependencies before `npm run dev` will work.
-
-This setup only runs once — the `scripts/postinstall/` scripts delete themselves after the first
-run, so every `npm install` after that is a normal install with no prompts.
 
 ## Scripts
 

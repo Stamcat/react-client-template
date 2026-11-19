@@ -1,0 +1,10 @@
+{
+  "name": "@stamcat/create-react-client-app",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "bin": {
+    "create-react-client-app": "./bin/create.js"
+  },
+  "files": ["bin", "src"]
+}

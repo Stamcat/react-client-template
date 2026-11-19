@@ -1,0 +1,6 @@
+---
+description: app standards (styling, imports, state management) for the repo
+alwaysApply: true
+---
+
+@AGENTS.md

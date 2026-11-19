@@ -1,0 +1,8 @@
+{
+  "dev": "vite",
+  "dev:force": "vite --force",
+  "build": "tsc -b && vite build",
+  "preview": "vite preview",
+  "lint:dependencies": "dependency-cruiser --config scripts/.dependency-cruiser-check.cjs src/main.tsx src",
+  "lint:dependencies:circular": "dependency-cruiser --config scripts/.dependency-cruiser-check-circular.cjs src/main.tsx src"
+}

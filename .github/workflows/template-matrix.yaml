@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# Full cross-product is 117 combinations; keep this out of per-PR cost by running on-demand/weekly
+# only, and skip Playwright e2e per job (the standard lint+build+test suite already covers each
+# generated project; e2e coverage is validated separately on this repo's own default checkout).
+name: Template matrix
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      combinations: ${{ steps.list.outputs.combinations }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: List valid combinations
+        id: list
+        run: echo "combinations=$(node packages/create-app/bin/list-combinations.js)" >> "$GITHUB_OUTPUT"
+
+  validate:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        combination: ${{ fromJson(needs.generate-matrix.outputs.combinations) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Generate project
+        run: >
+          node packages/create-app/bin/create.js generated-app --skip-install --yes
+        env:
+          CREATE_APP_ARCHITECTURE: ${{ matrix.combination.architecture }}
+          CREATE_APP_STYLING: ${{ matrix.combination.styling }}
+          CREATE_APP_STATE: ${{ matrix.combination.state }}
+          CREATE_APP_DESIGN_SYSTEM: ${{ matrix.combination.designSystem }}
+
+      # no lockfile exists yet to key setup-node's cache on, so cache npm's download cache directly
+      - name: Cache npm download cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ matrix.combination.architecture }}-${{ matrix.combination.styling }}-${{ matrix.combination.state }}-${{ matrix.combination.designSystem }}-${{ hashFiles('generated-app/package.json') }}
+          restore-keys: |
+            npm-${{ matrix.combination.architecture }}-${{ matrix.combination.styling }}-${{ matrix.combination.state }}-${{ matrix.combination.designSystem }}-
+
+      - name: Install dependencies
+        working-directory: generated-app
+        run: npm install
+
+      - name: Audit dependencies
+        working-directory: generated-app
+        run: npm audit --audit-level=high
+
+      - name: Lint
+        working-directory: generated-app
+        run: npm run lint
+
+      - name: Test
+        working-directory: generated-app
+        run: npm run test
+
+      - name: Build
+        working-directory: generated-app
+        run: npm run build
+
+  alert-on-failure:
+    needs: validate
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post failure alert
+        run: |
+          {
+            echo "### :rotating_light: Template matrix failure"
+            echo "One or more combinations failed lint, audit, test, or build."
+            echo "[View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1
+

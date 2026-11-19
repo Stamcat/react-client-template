@@ -1,6 +1,6 @@
 ---
 name: state-management
-description: 'Redux Toolkit + redux-saga conventions for the app standards — Redux by default, Context/thunks/composition/state-managed hooks opt-in only, colocated slice.ts/sagas.ts, wiring into src/redux/index.ts. Use when adding or reviewing state management anywhere in the repo.'
+description: 'Redux Toolkit + redux-saga conventions for the app standards — Redux by default, Context/thunks/composition/state-managed hooks opt-in only, colocated slice.ts/sagas.ts, wiring into src/utils/store.ts. Use when adding or reviewing state management anywhere in the repo.'
 ---
 
 # App Standards State Management
@@ -22,9 +22,12 @@ Applies to application code across the repo.
 
 - Colocate a component's `slice.ts` and `sagas.ts` (plus `selectors.ts`/`types.ts` as needed)
   inside the top-level component folder that owns that state.
-- Wire the reducer and sagas into `src/redux/index.ts`. Never import from a subfolder of
-  `src/redux` (e.g. `@/redux/feature/*`) — only `@/redux` (`src/redux/index.ts`) is a valid import
-  path from application code. Enforced by dependency-cruiser's `no-deep-redux-imports`.
+- Wire the reducer and sagas into `src/utils/store.ts` — the store is constructed directly in that
+  file, with no separate `src/redux/index.ts` barrel. A barrel file here would exist only to
+  re-export `store`/`RootState`/`AppDispatch` from the module that already defines them, which adds
+  an import hop without adding meaning (see
+  [component-architecture](../component-architecture/SKILL.md) for the general barrel-export
+  guidance).
 
 ## `distillers.ts` vs `selectors.ts`
 
@@ -57,7 +60,3 @@ Applies to application code across the repo.
 
 Redux + redux-saga as the default, and treating Context/thunks/composition/state-managed hooks as
 opt-in rather than banned, aren't machine-enforced — check for them in review.
-
-| Rule | Enforced by |
-| --- | --- |
-| No deep `src/redux/<folder>` imports | dependency-cruiser `no-deep-redux-imports` |

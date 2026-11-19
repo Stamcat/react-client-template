@@ -13,7 +13,6 @@
     "lint:fix": "eslint . --fix",
     "lint:package": "npmPkgJsonLint ./package.json",
     "lint:sonar": "eslint . -f json -o lintreport.json",
-    "postinstall": "node scripts/postinstall/index.cjs",
     "pretty": "prettier --write \"src/**/*\"",
     "preview": "vite preview",
     "test": "jest --passWithNoTests",

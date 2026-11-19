@@ -10,9 +10,9 @@ Applies to application code across the repo.
 ## No styling approach by default
 
 - The template ships with no styling approach wired in — new projects start with plain markup and
-  no stylesheet. The postinstall prompt (`scripts/postinstall/styling.cjs`) has a developer choose
-  one of: none (bring your own), SCSS Modules, CSS Modules, Tailwind CSS, or Emotion
-  (`@emotion/styled` paired with `@emotion/react`, scaffolded together as a single option).
+  no stylesheet. The `create-react-client-app` CLI's styling prompt (`templates/styling/`) has a
+  developer choose one of: none (bring your own), SCSS Modules, CSS Modules, Tailwind CSS, or
+  Emotion (`@emotion/styled` paired with `@emotion/react`, scaffolded together as a single option).
 - `styled-components` is no longer supported and is discouraged — use Emotion instead for any
   CSS-in-JS need. Don't introduce `styled-components` unprompted, and prefer migrating existing
   `styled-components` usage to Emotion when touching that code.
@@ -30,9 +30,9 @@ Applies to application code across the repo.
 ## When Tailwind CSS is the chosen approach
 
 - Use the class extraction pattern: define reusable class names in a stylesheet under
-  `@layer components` with `@apply` (see `scripts/postinstall/templates/styling/tailwind/index.css`
-  for the scaffolded example), and reference those named classes from markup instead of inlining
-  long, repeated utility-class strings directly in JSX.
+  `@layer components` with `@apply` (see `templates/styling/tailwind/vite/src/index.css` for the
+  scaffolded example), and reference those named classes from markup instead of inlining long,
+  repeated utility-class strings directly in JSX.
 - Reach for inline utility classes only for one-off, non-repeated styling; extract to a named
   `@apply` class as soon as the same combination of utilities is needed in more than one place.
 

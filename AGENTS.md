@@ -71,10 +71,6 @@ than growing this file — keep this file to the index table and the enforcement
 
 ## Enforcement summary
 
-| Rule | Enforced by |
-| --- | --- |
-| No deep `src/redux/<folder>` imports | `eslint.config.js` + dependency-cruiser `no-deep-redux-imports` |
-
 Dependency-cruiser rules run against the config at `scripts/.dependency-cruiser-check.cjs`. Add a
 row here — and a matching rule in `eslint.config.js` and/or
 `scripts/.dependency-cruiser-check.cjs` — every time a new convention below becomes machine

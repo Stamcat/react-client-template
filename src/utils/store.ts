@@ -1,12 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import createSagaMiddleware, { type SagaMiddleware } from "redux-saga";
+import createSagaMiddleware from "redux-saga";
 
+const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({});
 
-export const configureSagaMiddleware = (): SagaMiddleware => createSagaMiddleware();
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+});
 
-export const createStore = (sagaMiddleware: SagaMiddleware) =>
-    configureStore({
-        reducer: rootReducer,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
-    });
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

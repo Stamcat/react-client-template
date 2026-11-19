@@ -10,21 +10,32 @@ Applies to application components across the repo.
 ## Component reuse
 
 - Prefer imports from the current application surface and shared utilities. Avoid importing from
-  deprecated component trees or helper layers once the codebase accumulates any (see
-  [state-management](../state-management/SKILL.md) for the one import boundary this template
-  enforces today, `no-deep-redux-imports`).
+  deprecated component trees or helper layers once the codebase accumulates any.
 - When an area of the codebase is later deprecated in favor of a new pattern, add a dedicated
   dependency-cruiser rule (e.g. `no-legacy-components`) forbidding new code from importing it, and
   document the boundary in this skill — don't rely on convention alone once there's something
   concrete to enforce against.
 
+## Avoid barrel files and barrel-style `index` naming
+
+- Don't name a first-party module `index.ts`/`index.tsx` unless it is genuinely a barrel —
+  re-exporting a small, cohesive set of named exports from one entry point and containing no real
+  implementation logic of its own. A file that holds actual logic (a store, a slice, a component)
+  should be named for what it is (`store.ts`, `slice.ts`, `App.tsx`), not `index`, so the name
+  doesn't mislead anyone browsing the tree into expecting a barrel.
+- Don't add a barrel file to re-export a component or module's public surface from one folder,
+  first-party or third-party. A barrel re-exports many modules from a single file, and some
+  bundlers/analyses can't prove an individual re-export is unused, so importing anything from a
+  barrel risks dragging unrelated code (and its CSS) into the bundle. Import directly from the
+  module that defines what you need instead.
+
 ## Shared component imports — subpath only, never the barrel
 
 - If the project's shared UI component library exposes per-component subpaths (e.g.
   `my-ui-lib/Button`), import from the subpath, never from the package root barrel
-  (`my-ui-lib`). This is to empower tree-shaking: a barrel file re-exports every component from one
-  file, and some bundlers/analyses can't prove an individual barrel export is unused, so pulling
-  anything from the root risks dragging unrelated components (and their CSS) into the bundle.
+  (`my-ui-lib`). This is the same tree-shaking rationale as above, applied to a third-party
+  library: a barrel file re-exports every component from one file, so pulling anything from the
+  root risks dragging unrelated components (and their CSS) into the bundle.
 
 ```ts
 // wrong

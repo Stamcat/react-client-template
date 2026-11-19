@@ -1,0 +1,54 @@
+{
+  "name": "{{projectName}}",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . && npm run lint:package && npm run lint:dependencies",
+    "lint:fix": "eslint . --fix",
+    "lint:package": "npmPkgJsonLint ./package.json",
+    "lint:sonar": "eslint . -f json -o lintreport.json",
+    "pretty": "prettier --write \"src/**/*\"",
+    "test": "jest --passWithNoTests",
+    "test:bail": "jest --bail",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "4.7.1",
+    "@eslint/js": "9.33.0",
+    "@playwright/test": "1.64.1",
+    "@types/jest": "30.0.0",
+    "@types/node": "26.6.3",
+    "dependency-cruiser": "17.4.3",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-playwright": "2.12.1",
+    "eslint-plugin-prettier": "5.5.5",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "eslint-plugin-sonarjs": "4.2.2",
+    "globals": "16.3.0",
+    "jest": "30.5.2",
+    "jest-environment-jsdom": "30.5.2",
+    "jsdom": "27.0.0",
+    "npm-package-json-lint": "11.0.1",
+    "npm-package-json-lint-config-default": "10.0.0",
+    "prettier": "3.8.1",
+    "ts-jest": "29.4.4",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.73.0"
+  },
+  "overrides": {
+    "glob": "14.0.6",
+    "minimatch": "11.0.9"
+  }
+}

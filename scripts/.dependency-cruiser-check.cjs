@@ -51,16 +51,6 @@ module.exports = {
             from: {},
             to: { path: String.raw`\.(spec|test)\.(js|mjs|cjs|ts|tsx)$` },
         },
-        {
-            name: "no-deep-redux-imports",
-            severity: "error",
-            comment:
-                "Only `@/redux` (src/redux/index.ts) is a valid import path for application code — see " +
-                ".github/skills/state-management/SKILL.md. Add feature reducers/sagas there instead of reaching " +
-                "into a subfolder directly.",
-            from: { path: "^src", pathNot: "^src/redux" },
-            to: { path: String.raw`^src/redux/[^/]+/` },
-        },
     ],
     options: {
         doNotFollow: {

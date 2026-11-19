@@ -1,0 +1,8 @@
+{
+  "dev": "next dev",
+  "dev:force": "next dev --turbopack",
+  "build": "next build",
+  "preview": "next start",
+  "lint:dependencies": "dependency-cruiser --config scripts/.dependency-cruiser-check.cjs src/app/layout.tsx src",
+  "lint:dependencies:circular": "dependency-cruiser --config scripts/.dependency-cruiser-check-circular.cjs src/app/layout.tsx src"
+}
