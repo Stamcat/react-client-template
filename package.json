@@ -1,5 +1,7 @@
 {
   "name": "@stamcat/react-client-template",
+  "author": "Devin Marra",
+  "license": "MIT",
   "version": "0.0.1",
   "type": "module",
   "repository": {
