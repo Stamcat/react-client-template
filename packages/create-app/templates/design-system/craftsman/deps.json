@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@stamcat/craftsman": "0.1.22"
+    "@stamcat/craftsman": "0.1.22",
+    "react-icons": "5.7.0"
   }
 }
