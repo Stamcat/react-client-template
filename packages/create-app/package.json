@@ -1,6 +1,6 @@
 {
   "name": "@stamcat/create-react-client-app",
-  "version": "0.0.2",
+  "version": "0.0.2-alpha.0",
   "type": "module",
   "description": "Project generator for react-client-template: pick architecture, styling, design system, and state management, then scaffold only what you chose.",
   "repository": {
@@ -12,7 +12,11 @@
   "bin": {
     "create-react-client-app": "./bin/create.js"
   },
-  "files": ["bin", "src", "templates"],
+  "files": [
+    "bin",
+    "src",
+    "templates"
+  ],
   "publishConfig": {
     "access": "public"
   }
