@@ -26,3 +26,14 @@ jobs:
           else
             npm publish --access public --provenance
           fi
+          
+    #  - name: Publish to GitHub Packages
+    #     env:
+    #       NODE_AUTH_TOKEN: ${{ secrets.TEMPLATE_CI }}
+    #     run: |
+    #       cd dist
+    #       if [ "${{ needs.build.outputs.prerelease }}" = "true" ]; then
+    #         npm publish --tag next
+    #       else
+    #         npm publish
+    #       fi

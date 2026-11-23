@@ -11,7 +11,7 @@ import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import playwright from "eslint-plugin-playwright";
 
 export default tseslint.config([
-    globalIgnores(["dist", "coverage", "playwright-report", "test-results"]),
+    globalIgnores(["dist", ".next", "coverage", "playwright-report", "test-results"]),
     {
         files: ["e2e/**/*.{ts,tsx}"],
         extends: [playwright.configs["flat/recommended"]],
@@ -24,7 +24,7 @@ export default tseslint.config([
             tseslint.configs.recommended,
             tseslint.configs.eslintRecommended,
             reactHooks.configs["recommended-latest"],
-            reactRefresh.configs.vite,
+            reactRefresh.configs.recommended,
             sonarjs.configs.recommended,
             prettier,
             comments.recommended,
