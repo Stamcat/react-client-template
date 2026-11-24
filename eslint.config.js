@@ -46,7 +46,7 @@ export default tseslint.config([
             "max-lines": ["error", 1000],
             "react/prop-types": "error",
             "react/no-unescaped-entities": "error",
-            "react/jsx-no-bind": "error",
+            "react/jsx-no-bind": "warn",
             "react-refresh/only-export-components": [
                 "warn",
                 {

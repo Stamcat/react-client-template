@@ -11,8 +11,11 @@ Cursor all pick up the same rules. Grok (via `grok-cli`) and GPT (via OpenAI Cod
 Treat all application code as app-standard code for AI guidance and code review: use the patterns
 below everywhere unless a file is explicitly being left untouched.
 
-The lint and dependency rules are enforced directly by the repo config; do not depend on a
-manifest file to decide whether a pattern is allowed.
+The lint and dependency rules enforced by this repo's config (`eslint.config.js`,
+`scripts/.dependency-cruiser-check.cjs`, `.npmpackagejsonlintrc.json`, etc.) are binding on every
+line of code written or edited, whether or not that specific rule is called out by name in this
+file or a skill doc — a skill's silence on a rule is not permission to violate it. Run
+`npm run lint` to check, don't guess.
 
 Prefer named exports for app code and avoid default exports unless there is a clear, justified
 exception such as framework-required lazy loading. New components and modules should use
